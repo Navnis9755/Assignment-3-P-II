@@ -1,0 +1,124 @@
+from datetime import date
+
+#made a class named Individual with name as instance variable.
+class Individual():
+    def __init__(self, name):
+        self.name=name
+        self.birthday=None #initialize birthday to None
+
+    #getting name attribute
+    def get_name(self):
+        return self.name
+    
+    #adding birthday to the class
+    def add_birthday(self, birthday):
+        self.birthday=birthday
+        return self.birthday
+    
+    #calculate age of the Individual
+    def get_age(self):
+        self.birthday=self.birthday.year
+        a=date.today()
+        b=a.year
+        age=b-self.birthday #calculating age
+        return age
+    
+    def __str__(Individual):
+        return str(Individual)
+
+#made a new class named AU_Employee, inheriting properties of class Individual
+class  AU_Employee(Individual):
+    fresh=1 #variable to generate new id
+    def __init__(self, name):
+        super().__init__(name) #calling magic word init to initialize name
+
+    def get_unique_id(self): #generate unique id for AU faculty
+        self.id=AU_Employee.fresh
+        AU_Employee.fresh+=1
+        return self.id
+    
+#defining a new class Faculty, inheriting properties from AU_Employee
+class Faculty(AU_Employee):
+    def __init__(self, name):
+        super().__init__(name)
+
+#defining a class EN_Faculty, inheriting properties of class Faculty.
+class EN_Faculty(Faculty):
+    def __init__(self, name, classroom_year): #initializing objects of class EN_Faculty
+        super().__init__(name)
+        self.name=name
+        self.classroom_year=classroom_year
+
+    def assign_class(self): #assigning class to Faculty
+        return 'Btech 2nd year'
+    
+    def assign_year(self): #assigning classroom year to the Faculty 
+        return self.classroom_year
+
+#defining a class Design_Faculty, inheriting properties of class Faculty.
+class Design_Faculty(Faculty):
+    def __init__(self, name, classroom_year):
+        super().__init__(name)
+        self.name=name
+        self.classroom_year=classroom_year
+
+    def assign_class(self):
+        return 'Bdes 2nd year'
+    
+    def assign_year(self):
+        return self.classroom_year
+    
+#defining a new class Roster_AU
+class Roaster_AU():
+    def __init__(self):
+        self.facult=[] #empty list to store faculty
+        self.cour={} #empty dictionary to store courses for faculty
+    
+    def add_faculty(self,faculty): 
+        self.faculty=faculty
+        if faculty not in self.facult: #checking if faculty is already in the list
+            self.cour[faculty]=[] #if no faculty exist, adding an empty list for course
+            return self.cour
+
+    def add_course(self, course, new):
+        (self.cour[new]).append(course) #adding courses to the faculty's list
+        return self.cour
+    
+    def get_course(self,new):
+        self.new=new
+        try: #adding a try-except block
+            if self.new not in self.cour:
+                raise ValueError('sorry! no such faculty found') #raising a value error if faculty not found
+            else:
+                return self.cour[self.new]
+        except ValueError: #exccepting value error 
+            print('sorry! no such faculty found') #message if faculty not found
+
+#creating Faculty instance, Roster_AU instance, adding courses to the faculty, printing courses for faculty.
+obj=Individual('Navni')
+print(obj.get_name())
+obj.add_birthday(date(2005,11,26))
+print(obj.get_age())
+a=Faculty('Rushikesh Sir')
+b=Faculty('Satyajit Sir')
+c=Faculty('Varshali Mam')
+d=Faculty('Rahul sir')
+obj1=Roaster_AU()
+obj1.add_faculty(a)
+obj1.add_course('ITC', a)
+print(obj1.get_course(a))
+
+obj2=Roaster_AU()
+obj2.add_faculty(b)
+obj2.add_course('JOM', b)
+print(obj2.get_course(b))
+
+obj3=Roaster_AU()
+obj3.add_faculty(c)
+obj3.add_course('FOP', c)
+print(obj3.get_course(c))
+
+obj4=Roaster_AU()
+obj4.add_faculty(d)
+obj4.add_course('POE', d)
+print(obj4.get_course(d))
